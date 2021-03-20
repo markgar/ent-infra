@@ -5,6 +5,11 @@ var sqlNamingGuid = '8f3f0a36-4a7f-4dd3-a122-668b703c27dd'
 
 param rgName string
 
+param adminUsername string
+
+@secure()
+param adminPassword string
+
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: rgName
   location: 'eastus'
@@ -22,8 +27,8 @@ module createSql './../../mod/sql.bicep' = {
   scope: rg
   name: 'createSql'
   params: {
-    adminUsername: 'mgarner'
-    adminPassword: 'Ql4t!bd.7!@#'
+    adminUsername: adminUsername
+    adminPassword: adminPassword
     namingGuid: sqlNamingGuid
     sqlDBName: 'SampleDB'
   }
