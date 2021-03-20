@@ -1,6 +1,6 @@
 //names
 param namingGuid string
-param storageAccountName string = 'vmdiag${substring(uniqueString(resourceGroup().id, namingGuid),1 ,8)}'
+param storageAccountName string = 'vmdiag${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
 param nicName string = 'nic-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
 param publicIPAddressName string = 'pip-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
 param vmName string = 'vm-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
@@ -28,9 +28,12 @@ param adminPassword string
 param windowsOSVersion string = '2019-Datacenter'
 
 @description('Size of the virtual machine.')
-param vmSize string = 'Standard_D8s_v4'
-
-
+@allowed([
+  'Standard_D2s_v4'
+  'Standard_D4s_v4'
+  'Standard_D8s_v4'
+])
+param vmSize string
 
 resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: storageAccountName
@@ -96,13 +99,6 @@ resource VM 'Microsoft.Compute/virtualMachines@2020-06-01' = {
       osDisk: {
         createOption: 'FromImage'
       }
-      dataDisks: [
-        {
-          diskSizeGB: 1023
-          lun: 0
-          createOption: 'Empty'
-        }
-      ]
     }
     networkProfile: {
       networkInterfaces: [
@@ -123,7 +119,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2020-06-01' = {
 resource offSched 'Microsoft.DevTestLab/schedules@2018-09-15' = {
   name: 'shutdown-computevm-${vmName}'
   location: location
-  properties:{
+  properties: {
     status: 'Enabled'
     taskType: 'ComputeVmShutdownTask'
     dailyRecurrence: {
@@ -134,7 +130,7 @@ resource offSched 'Microsoft.DevTestLab/schedules@2018-09-15' = {
       status: 'Disabled'
     }
     targetResourceId: VM.id
-  }  
+  }
 }
 
 output hostname string = pip.properties.dnsSettings.fqdn

@@ -32,6 +32,7 @@ module createArcHostVM './../../mod/dev-vm.bicep' = {
     adminUsername: adminUsername
     vmSubnetId: createVnet.outputs.defaultSubnetId
     namingGuid: vmNamingGuid
+    vmSize: 'Standard_D8s_v4'
   }
 }
 
