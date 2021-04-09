@@ -7,8 +7,10 @@ param location string = resourceGroup().location
 //required
 param tags object
 param vnetSubnetId string
+param aksSPClientId string
+param aksSPSecret string
 
-resource aks 'Microsoft.ContainerService/managedClusters@2020-07-01' = {
+resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
   name: aksName
   location: location
   properties: {
@@ -19,5 +21,9 @@ resource aks 'Microsoft.ContainerService/managedClusters@2020-07-01' = {
         vnetSubnetID: vnetSubnetId
       }
     ]
+    servicePrincipalProfile: {
+      clientId: aksSPClientId
+      secret: aksSPSecret
+    }
   }
 }
