@@ -9,6 +9,7 @@ on:
     branches: [ main ]
     paths:
     - 'rg/shared-vnet/**'
+    - '.github/workflows/shared-vnet.yml'
   pull_request:
     branches: [ main ]
 
@@ -29,4 +30,5 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run deploy script
-        run: powershell ./rg/shared-vnet/deploy.ps1
+        run: ./rg/shared-vnet/deploy.ps1
+        shell: powershell
