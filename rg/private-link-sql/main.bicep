@@ -1,8 +1,5 @@
 targetScope = 'subscription'
 
-var vnetNamingGuid = 'be541c48-25e9-4c61-8efd-8c184de0295d'
-var sqlNamingGuid = '8f3f0a36-4a7f-4dd3-a122-668b703c27dd'
-
 param rgName string
 
 param adminUsername string
@@ -10,35 +7,45 @@ param adminUsername string
 @secure()
 param adminPassword string
 
+var tags = {
+  'env': 'sbx'
+}
+param now string = utcNow()
+var vnetId = '/subscriptions/75ebdae9-6e1c-4baa-8b2e-5576f6356a91/resourceGroups/m-shared-vnet/providers/Microsoft.Network/virtualNetworks/vnet-4p7rjz3pg5tyy'
+var privateLinkSubnetName = 'privatelink'
+
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: rgName
   location: 'eastus'
 }
 
-module createVnet './../../mod/vnet.bicep' = {
-  scope: rg
-  name: 'createVnet'
-  params:{
-    namingGuid: vnetNamingGuid
-  }
-}
+// module createVnet './../../mod/vnet.bicep' = {
+//   scope: rg
+//   name: 'createVnet-${now}'
+//   params: {
+//     tags: tags
+//   }
+// }
 
 module createSql './../../mod/sql.bicep' = {
   scope: rg
-  name: 'createSql'
+  name: 'createSql-${now}'
   params: {
     adminUsername: adminUsername
     adminPassword: adminPassword
-    namingGuid: sqlNamingGuid
+    tags: tags
     sqlDBName: 'SampleDB'
   }
 }
 
-// module createPE 'sql-pe.bicep' = {
-//   scope: rg
-//   name: 'createPE'
-//   params: {
-//     sqlServerId: createSql.outputs.sqlServerId
-//   }
-// }
-
+module createPE './../../mod/sql-pe.bicep' = {
+  scope: rg
+  name: 'createPE-${now}'
+  params: {
+    sqlServerId: createSql.outputs.sqlServerId
+    dnsZoneName: 'privatelink.database.windows.net'
+    vnetId: vnetId
+    vnetSubnetId: '${vnetId}\\subnets\\${privateLinkSubnetName}'
+    tags: tags
+  }
+}

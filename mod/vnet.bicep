@@ -1,30 +1,34 @@
 //names
-param namingGuid string
-param virtualNetworkName string = 'vnet-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param networkSecurityGroupName string = 'nsg-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
+param disambiguationPhrase string = ''
+param virtualNetworkName string = 'vnet-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
+param networkSecurityGroupName string = 'nsg-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 
 param location string = resourceGroup().location
+
+//required
+param tags object
 
 resource sg 'Microsoft.Network/networkSecurityGroups@2020-06-01' = {
   name: networkSecurityGroupName
   location: location
   properties: {
     securityRules: [
-      {
-        name: 'default-allow-3389'
-        'properties': {
-          priority: 1000
-          access: 'Allow'
-          direction: 'Inbound'
-          destinationPortRange: '3389'
-          protocol: 'Tcp'
-          sourcePortRange: '*'
-          sourceAddressPrefix: '*'
-          destinationAddressPrefix: '*'
-        }
-      }
+      // {
+      //   name: 'default-allow-3389'
+      //   'properties': {
+      //     priority: 1000
+      //     access: 'Allow'
+      //     direction: 'Inbound'
+      //     destinationPortRange: '3389'
+      //     protocol: 'Tcp'
+      //     sourcePortRange: '*'
+      //     sourceAddressPrefix: '*'
+      //     destinationAddressPrefix: '*'
+      //   }
+      // }
     ]
   }
+  tags: tags
 }
 
 resource vn 'Microsoft.Network/virtualNetworks@2020-06-01' = {
@@ -52,9 +56,19 @@ resource vn 'Microsoft.Network/virtualNetworks@2020-06-01' = {
           addressPrefix: '10.0.1.0/24'
         }
       }
+      {
+        name: 'privatelink'
+        properties: {
+          addressPrefix: '10.0.2.0/24'
+          privateEndpointNetworkPolicies: 'Disabled'
+        }
+      }
     ]
   }
+  tags: tags
 }
 
+output vnetId string = vn.id 
 output defaultSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}' ,'default')
 output bastionSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}' ,'AzureBastionSubnet')
+output privateLinkSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}' ,'privatelink')

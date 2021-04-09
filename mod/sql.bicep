@@ -1,7 +1,6 @@
 //names
-param namingGuid string
-param serverName string = 'sqls-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-//param sqlDBName string = 'sqldb-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
+param disambiguationPhrase string = ''
+param serverName string = 'sqls-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 param location string = resourceGroup().location
 
 //required
@@ -9,6 +8,7 @@ param sqlDBName string
 param adminUsername string
 @secure()
 param adminPassword string
+param tags object
 
 
 resource sqlServer 'Microsoft.Sql/servers@2019-06-01-preview' = {
@@ -18,6 +18,7 @@ resource sqlServer 'Microsoft.Sql/servers@2019-06-01-preview' = {
     administratorLogin: adminUsername
     administratorLoginPassword: adminPassword
   }
+  tags: tags
 }
 
 resource sqlDB 'Microsoft.Sql/servers/databases@2020-08-01-preview' = {
@@ -27,6 +28,7 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2020-08-01-preview' = {
     name: 'Standard'
     tier: 'Standard'
   }
+  tags: tags
 }
 
 output sqlServerId string = sqlServer.id

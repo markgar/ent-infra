@@ -1,7 +1,10 @@
 //names
-param namingGuid string
-param vaultName string = 'keyVault${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
+param disambiguationPhrase string = ''
+param vaultName string = 'kv${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 param location string = resourceGroup().location
+
+//required
+param tags object
 
 //options
 param sku string = 'Standard'
@@ -56,7 +59,7 @@ param enabledForDeployment bool = true
 param enabledForTemplateDeployment bool = true
 param enabledForDiskEncryption bool = true
 param enableRbacAuthorization bool = false
-param softDeleteRetentionInDays int = 90
+param softDeleteRetentionInDays int = 7
 
 param networkAcls object = {
   ipRules: []
@@ -80,4 +83,5 @@ resource keyvault 'Microsoft.KeyVault/vaults@2019-09-01' = {
     softDeleteRetentionInDays: softDeleteRetentionInDays
     networkAcls: networkAcls
   }
+  tags: tags
 }

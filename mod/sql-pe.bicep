@@ -1,15 +1,16 @@
 //names
-param namingGuid string
-param pipName string = 'pip-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param dnsZoneName string = 'zone-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param dnsZoneGroupName string = 'zonegroup-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param privateEndpointName string = 'pe-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
+param disambiguationPhrase string = ''
+param pipName string = 'pip-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
+param dnsZoneGroupName string = 'zonegroup-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
+param privateEndpointName string = 'pe-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 param location string = resourceGroup().location
 
 //required
+param dnsZoneName string
 param sqlServerId string
 param vnetId string
 param vnetSubnetId string
+param tags object
 
 resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
   name: privateEndpointName
@@ -30,15 +31,31 @@ resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
       }
     ]
   }
+  tags: tags
+}
+
+resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
+  name: '${privateEndpointName}/default'
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'config1'
+        properties: {
+          privateDnsZoneId: '${dnsZone.id}'
+        }
+      }
+    ]
+  }
+  //tags: tags
 }
 
 resource dnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   name: dnsZoneName
   location: 'global'
-  // dependsOn: [
-  //   vnet
-  // ]
+  tags: tags
 }
+
+
 
 resource link 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
   name: '${dnsZoneName}/${dnsZoneName}-link'
@@ -49,18 +66,8 @@ resource link 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01'
       id: vnetId
     }
   }
-}
-
-resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
-  name: '${privateEndpointName}/default'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'config1'
-        properties: {
-          privateDnsZoneId: '${dnsZone.id}/privatelink.database.windows.net'
-        }
-      }
-    ]
-  }
+  tags: tags
+  // dependsOn: [
+  //   dnsZone
+  // ]
 }

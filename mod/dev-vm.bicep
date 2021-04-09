@@ -1,15 +1,16 @@
 //names
-param namingGuid string
-param storageAccountName string = 'vmdiag${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param nicName string = 'nic-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param publicIPAddressName string = 'pip-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param vmName string = 'vm-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
+param disambiguationPhrase string = ''
+param storageAccountName string = 'stg${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
+param nicName string = 'nic-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
+param publicIPAddressName string = 'pip-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
+param vmName string = 'vm-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 
 @description('location for all resources')
 param location string = resourceGroup().location
 
 //required
 param vmSubnetId string
+param tags object
 param adminUsername string
 @secure()
 param adminPassword string
@@ -28,11 +29,6 @@ param adminPassword string
 param windowsOSVersion string = '2019-Datacenter'
 
 @description('Size of the virtual machine.')
-@allowed([
-  'Standard_D2s_v4'
-  'Standard_D4s_v4'
-  'Standard_D8s_v4'
-])
 param vmSize string
 
 resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
@@ -42,6 +38,7 @@ resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
     name: 'Standard_LRS'
   }
   kind: 'Storage'
+  tags: tags
 }
 
 resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
@@ -53,6 +50,7 @@ resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
       domainNameLabel: vmName
     }
   }
+  tags: tags
 }
 
 resource nic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
@@ -75,6 +73,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
       }
     ]
   }
+  tags: tags
 }
 
 resource VM 'Microsoft.Compute/virtualMachines@2020-06-01' = {
@@ -85,7 +84,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2020-06-01' = {
       vmSize: vmSize
     }
     osProfile: {
-      computerName: vmName
+      computerName: substring(vmName,3,13) //strips off the 'vm-' so the vm name is short enough
       adminUsername: adminUsername
       adminPassword: adminPassword
     }
@@ -114,6 +113,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2020-06-01' = {
       }
     }
   }
+  tags: tags
 }
 
 resource offSched 'Microsoft.DevTestLab/schedules@2018-09-15' = {
@@ -131,6 +131,7 @@ resource offSched 'Microsoft.DevTestLab/schedules@2018-09-15' = {
     }
     targetResourceId: VM.id
   }
+  tags: tags
 }
 
 output hostname string = pip.properties.dnsSettings.fqdn

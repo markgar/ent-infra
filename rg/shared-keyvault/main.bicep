@@ -1,8 +1,11 @@
 targetScope = 'subscription'
 
-var namingGuid = '681a7143-1a0a-4ad2-a718-b0eda69d29ff'
-
 param rgName string
+
+var tags = {
+  'env': 'sbx'
+}
+param now string = utcNow()
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: rgName
@@ -11,8 +14,10 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 
 module createKeyVault './../../mod/keyvault.bicep' = {
   scope: rg
-  name: 'createKeyVault'
+  name: 'createKeyVault-${now}'
+
   params: {
-    namingGuid: namingGuid
+    tags: tags
+    softDeleteRetentionInDays: 90
   }
 }

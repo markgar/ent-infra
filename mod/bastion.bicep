@@ -1,12 +1,12 @@
 //names
-param namingGuid string
-param bastionName string = 'bastion-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
-param pipName string = 'pip-${substring(uniqueString(resourceGroup().id, namingGuid), 1, 8)}'
+param disambiguationPhrase string = ''
+param bastionName string = 'bastion-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
+param pipName string = 'pip-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 param location string = resourceGroup().location
 
 //required
 param subnetId string
-
+param tags object
 
 resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
   name: pipName
@@ -17,6 +17,7 @@ resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
   properties: {
     publicIPAllocationMethod: 'Static'
   }
+  tags: tags
 }
 
 resource bastion 'Microsoft.Network/bastionHosts@2020-06-01' = {
@@ -37,4 +38,5 @@ resource bastion 'Microsoft.Network/bastionHosts@2020-06-01' = {
       }
     ]
   }
+  tags: tags
 }
