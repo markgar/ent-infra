@@ -14,6 +14,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
   name: aksName
   location: location
   properties: {
+    dnsPrefix: aksName
     agentPoolProfiles: [
       {
         name: 'pool1'
