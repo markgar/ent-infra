@@ -8,7 +8,7 @@ param location string = resourceGroup().location
 param tags object
 param vnetSubnetId string
 
-resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
+resource aks 'Microsoft.ContainerService/managedClusters@2020-07-01' = {
   name: aksName
   location: location
   properties: {
