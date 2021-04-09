@@ -34,6 +34,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run deploy script
+        shell: pwsh
         run: |
           Set-Location -Path ./rg/shared-vnet
           ./deploy.ps1
