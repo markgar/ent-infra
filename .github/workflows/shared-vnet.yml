@@ -30,4 +30,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run deploy script
-        run: ./rg/shared-vnet/deploy.ps1
+        run: .\rg\shared-vnet\deploy.ps1
