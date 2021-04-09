@@ -19,6 +19,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
         name: 'pool1'
         count: 1
         vnetSubnetID: vnetSubnetId
+        vmSize: 'Standard_D2_v2'
       }
     ]
     servicePrincipalProfile: {
