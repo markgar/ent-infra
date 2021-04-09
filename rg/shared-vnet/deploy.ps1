@@ -3,4 +3,4 @@ $rgname = "m-" + $rgname
 
 $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
-az deployment sub create --location eastus --template-file .\rg\shared-vnet\main.bicep --name $deploymentName --parameters rgName=$rgname
+az deployment sub create --location eastus --template-file .\main.bicep --name $deploymentName --parameters rgName=$rgname
