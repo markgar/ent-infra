@@ -4,8 +4,8 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'rg/simple-storage/**'
-    - '.github/workflows/simple-storage.yml'
+    - 'rg/shared-vnet/**'
+    - '.github/workflows/shared-vnet.yml'
   pull_request:
     branches: [ main ]
 
@@ -28,5 +28,5 @@ jobs:
       - name: Run deploy script
         shell: pwsh
         run: |
-          Set-Location -Path ./rg/simple-storage
+          Set-Location -Path ./rg/shared-vnet
           ./deploy.ps1

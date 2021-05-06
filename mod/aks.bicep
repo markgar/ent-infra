@@ -15,6 +15,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
   location: location
   properties: {
     dnsPrefix: aksName
+    
     networkProfile: {
       networkPlugin: 'azure'
       serviceCidr: '10.0.254.0/24'
