@@ -15,5 +15,4 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
     name: 'Standard_LRS'
     tier: 'Standard'
   }
-  tags: tags
 }
