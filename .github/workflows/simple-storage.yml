@@ -25,8 +25,8 @@ jobs:
       - name: run deploy script
         shell: pwsh
         run: |
-          $parameters = @{ rgName = 'simple-storage' }
-          $parameters | ConvertTo-Json | Out-File -Filepath './rg/simple-storage/parameters.json'
+          $params = @{ rgName = 'simple-storage' }
+          $params | ConvertTo-Json | Out-File -Filepath './rg/simple-storage/params.json'
 
       - name: create artifact
         uses: actions/upload-artifact@v2
@@ -57,4 +57,4 @@ jobs:
           # $env = '${{ secrets.ENV }}'
           $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
-          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters @parameters.json --parameters env=$env
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters @params.json --parameters env=$env
