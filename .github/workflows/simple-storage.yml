@@ -26,7 +26,7 @@ jobs:
         shell: pwsh
         run: |
           $parameters = @{ rgName = 'simple-storage' }
-          $parameters | ConvertTo-Json | Out-File -Filepath './rg/simple-storage/parameters.json
+          $parameters | ConvertTo-Json | Out-File -Filepath './rg/simple-storage/parameters.json'
 
       - name: create artifact
         uses: actions/upload-artifact@v2
