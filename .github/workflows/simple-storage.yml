@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@2
         with:
           name: bicep
-          path: 'rg/simple-storage/**''
+          path: 'rg/simple-storage/**'
 
       - name: run deploy script
         shell: pwsh
