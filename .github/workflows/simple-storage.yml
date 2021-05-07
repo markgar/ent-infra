@@ -14,7 +14,7 @@ on:
 
 jobs:
 
-  build:
+  build-phase:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,9 +28,10 @@ jobs:
           name: bicep
           path: 'rg/simple-storage/**'
 
-  deploy:
+  deploy-to-dev:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-phase
+    environment: dev
 
     steps:
       - name: login to azure
