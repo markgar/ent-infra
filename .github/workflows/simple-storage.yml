@@ -1,11 +1,11 @@
-name: shared-vnet-ci
+name: simple-storage-ci
 
 on:
   push:
     branches: [ main ]
     paths:
-    - 'rg/shared-vnet/**'
-    - '.github/workflows/shared-vnet.yml'
+    - 'rg/simple-storage/**'
+    - '.github/workflows/simple-storage.yml'
   pull_request:
     branches: [ main ]
 
@@ -19,14 +19,22 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: fetch code
+        uses: actions/checkout@v2
 
-      - uses: azure/login@v1
+      - name: login to azure
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Run deploy script
+      - name: create artifact
+        uses: actions/upload-artifact@2
+        with:
+          name: bicep
+          path: 'rg/simple-storage/**''
+
+      - name: run deploy script
         shell: pwsh
         run: |
-          Set-Location -Path ./rg/shared-vnet
+          Set-Location -Path ./rg/simple-storage
           ./deploy.ps1
