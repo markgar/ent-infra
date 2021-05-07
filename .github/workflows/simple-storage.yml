@@ -22,11 +22,11 @@ jobs:
       - name: fetch code
         uses: actions/checkout@v2
 
-      - name: create parameters file
+      - name: run deploy script
         shell: pwsh
         run: |
-          $parameters = @{ env = '${{ secrets.ENV }}'; }
-          $parameters | ConvertTo-Json | Out-File -FilePath rg/simple-storage/parameters.json
+          $parameters = @{'rgName':'simple-storage'}
+          $parameters | ConvertTo-Json | Out-File -Filepath 'rg/simple-storage/parameters.json
 
       - name: create artifact
         uses: actions/upload-artifact@v2
@@ -53,8 +53,8 @@ jobs:
       - name: run deploy script
         shell: pwsh
         run: |
-          $rgname = (Get-Location).Path.Split("/")[(Get-Location).Path.Split("/").Count-1]
-          $env = '${{ secrets.ENV }}'
+          # $rgname = (Get-Location).Path.Split("/")[(Get-Location).Path.Split("/").Count-1]
+          # $env = '${{ secrets.ENV }}'
           $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
-          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters rgName=$rgname env=$env
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters @parameters.json --parameters env=$env
