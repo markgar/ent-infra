@@ -28,7 +28,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: create artifact
-        uses: actions/upload-artifact@2
+        uses: actions/upload-artifact@v2
         with:
           name: bicep
           path: 'rg/simple-storage/**'
