@@ -22,6 +22,12 @@ jobs:
       - name: fetch code
         uses: actions/checkout@v2
 
+      - name: create parameters file
+        shell: pwsh
+        run: |
+          $parameters = @{ env = '${{ secrets.ENV }}'; }
+          $parameters | ConvertTo-Json | Out-File -FilePath rg/simple-storage/parameters.json
+
       - name: create artifact
         uses: actions/upload-artifact@v2
         with:
