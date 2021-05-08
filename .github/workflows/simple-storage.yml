@@ -62,7 +62,7 @@ jobs:
 
   deploy-to-test:
     runs-on: ubuntu-latest
-    needs: build-phase
+    needs: deploy-to-dev
     environment: test
 
     steps:
