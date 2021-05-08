@@ -54,7 +54,6 @@ jobs:
         shell: pwsh
         run: |
           $params = Get-Content -Raw -Path params.json | ConvertFrom-Json
-          Out-Console $params.rgName
           $rgName = $params.rgName
           $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
