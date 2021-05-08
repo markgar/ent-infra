@@ -58,3 +58,29 @@ jobs:
           $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
           az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env='${{ secrets.ENV }}' rgName=$rgName
+
+
+  deploy-to-test:
+    runs-on: ubuntu-latest
+    needs: build-phase
+    environment: test
+
+    steps:
+      - name: login to azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: retrieve artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: bicep
+
+      - name: run deploy script
+        shell: pwsh
+        run: |
+          $params = Get-Content -Raw -Path params.json | ConvertFrom-Json
+          $rgName = $params.rgName
+          $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
+
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env='${{ secrets.ENV }}' rgName=$rgName
