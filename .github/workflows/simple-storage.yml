@@ -59,6 +59,7 @@ jobs:
 
           az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env='${{ secrets.ENV }}' rgName=$rgName
 
+
   deploy-to-test:
     runs-on: ubuntu-latest
     needs: deploy-to-dev
