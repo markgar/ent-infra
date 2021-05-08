@@ -55,6 +55,7 @@ jobs:
         run: |
           # $rgname = (Get-Location).Path.Split("/")[(Get-Location).Path.Split("/").Count-1]
           # $env = '${{ secrets.ENV }}'
+          $params = Get-Content -Raw -Path params.json | ConvertFrom-Json
           $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
-          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters ./params.json --parameters env=$env
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env=$env rgName=$params.rgName
