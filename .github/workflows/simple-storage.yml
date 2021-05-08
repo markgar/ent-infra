@@ -54,8 +54,8 @@ jobs:
         shell: pwsh
         run: |
           $params = Get-Content -Raw -Path params.json | ConvertFrom-Json
-          $params.rgName
+          Out-Console $params.rgName
           $rgName = $params.rgName
           $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
-          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env=$env rgName=$rgName
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env='${{ secrets.ENV }}' rgName=$rgName
