@@ -57,4 +57,4 @@ jobs:
           # $env = '${{ secrets.ENV }}'
           $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
 
-          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters @params.json --parameters env=$env
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters ./params.json --parameters env=$env
