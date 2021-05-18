@@ -95,7 +95,9 @@ resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' 
             {
               name: 'ipconfig'
               properties: {
-                subnet: aciSubnet
+                subnet: {
+                  id: aciSubnet.id
+                }
               }
             }
           ]
