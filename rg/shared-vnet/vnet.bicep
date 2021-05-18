@@ -69,23 +69,20 @@ resource vn 'Microsoft.Network/virtualNetworks@2020-06-01' = {
           addressPrefix: '10.0.3.0/24'
         }
       }
+      {
+        name: 'aci'
+        properties: {
+          addressPrefix: '10.0.4.0/24'
+        }
+      }
     ]
   }
   tags: tags
 }
-
-resource aciSubnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
-  name: 'aci'
-  parent: vn
-  properties:  {
-    addressPrefix: '10.0.4.0/24'
-  }
-  
-}
-
 
 
 output vnetId string = vn.id
 output defaultSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'default')
 output bastionSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'AzureBastionSubnet')
 output privateLinkSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'privatelink')
+output aciSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'aci')
