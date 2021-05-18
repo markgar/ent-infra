@@ -83,27 +83,27 @@ resource aciSubnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
   
 }
 
-// resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
-//   name: 'aciNetworkProfile'
-//   location: location
-//   properties: {
-//     containerNetworkInterfaceConfigurations: [
-//       {
-//         name: 'nicConfiguration'
-//         properties: {
-//           ipConfigurations: [
-//             {
-//               name: 'ipconfig'
-//               properties: {
-//                 subnet: 
-//               }
-//             }
-//           ]
-//         }
-//       }
-//     ]
-//   }
-// }
+resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
+  name: 'aciNetworkProfile'
+  location: location
+  properties: {
+    containerNetworkInterfaceConfigurations: [
+      {
+        name: 'nicConfiguration'
+        properties: {
+          ipConfigurations: [
+            {
+              name: 'ipconfig'
+              properties: {
+                subnet: aciSubnet
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
 
 output vnetId string = vn.id
 output defaultSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'default')
