@@ -77,6 +77,9 @@ resource vn 'Microsoft.Network/virtualNetworks@2020-06-01' = {
 resource aciSubnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
   name: 'aci'
   parent: vn
+  properties:  {
+    addressPrefix: '10.0.4.0/24'
+  }
   
 }
 
