@@ -74,7 +74,35 @@ resource vn 'Microsoft.Network/virtualNetworks@2020-06-01' = {
   tags: tags
 }
 
-output vnetId string = vn.id 
-output defaultSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}' ,'default')
-output bastionSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}' ,'AzureBastionSubnet')
-output privateLinkSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}' ,'privatelink')
+resource aciSubnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
+  name: 'aci'
+  parent: vn
+  
+}
+
+// resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
+//   name: 'aciNetworkProfile'
+//   location: location
+//   properties: {
+//     containerNetworkInterfaceConfigurations: [
+//       {
+//         name: 'nicConfiguration'
+//         properties: {
+//           ipConfigurations: [
+//             {
+//               name: 'ipconfig'
+//               properties: {
+//                 subnet: 
+//               }
+//             }
+//           ]
+//         }
+//       }
+//     ]
+//   }
+// }
+
+output vnetId string = vn.id
+output defaultSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'default')
+output bastionSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'AzureBastionSubnet')
+output privateLinkSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets/', '${virtualNetworkName}', 'privatelink')

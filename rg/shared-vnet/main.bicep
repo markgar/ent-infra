@@ -13,7 +13,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: 'eastus'
 }
 
-module createVnet './../../mod/vnet.bicep' = {
+module createVnet './vnet.bicep' = {
   name: 'createVnet-${now}'
   scope: rg
   params: {
