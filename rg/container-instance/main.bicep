@@ -3,6 +3,8 @@ targetScope = 'subscription'
 param rgName string
 param env string
 
+var vnetId = '/subscriptions/75ebdae9-6e1c-4baa-8b2e-5576f6356a91/resourceGroups/m-shared-vnet/providers/Microsoft.Network/virtualNetworks/vnet-4p7rjz3pg5tyy'
+
 var tags = {
   'env': 'dev'
 }
@@ -20,5 +22,6 @@ module createStorage 'aci.bicep' = {
   name: 'createAci-${now}'
   params: {
     tags: tags
+    subnetId: '${vnetId}\\subnets\\aci'
   }
 }
