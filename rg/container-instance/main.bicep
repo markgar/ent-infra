@@ -22,6 +22,6 @@ module createStorage 'aci.bicep' = {
   name: 'createAci-${now}'
   params: {
     tags: tags
-    subnetId: '${vnetId}\\subnets\\aci'
+    subnetId: '${vnetId}/subnets/aci'
   }
 }
