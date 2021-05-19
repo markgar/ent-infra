@@ -73,6 +73,14 @@ resource vn 'Microsoft.Network/virtualNetworks@2020-06-01' = {
         name: 'aci'
         properties: {
           addressPrefix: '10.0.4.0/24'
+          delegations: [
+            {
+              name: 'aci'
+              properties: {
+                serviceName: 'Microsoft.ContainerInstance/containerGroups'
+              }
+            }
+          ]
         }
       }
     ]
