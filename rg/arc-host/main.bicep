@@ -11,7 +11,8 @@ var tags = {
   'env': 'sbx'
 }
 param now string = utcNow()
-var vnetId = '/subscriptions/75ebdae9-6e1c-4baa-8b2e-5576f6356a91/resourceGroups/m-shared-vnet/providers/Microsoft.Network/virtualNetworks/vnet-4p7rjz3pg5tyy'
+var vnetName = 'vnet-4p7rjz3pg5tyy'
+var vnetResourceGroupName = 'm-shared-vnet'
 var subnetName = 'default'
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
@@ -19,13 +20,10 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: 'eastus'
 }
 
-// module createVnet './../../mod/vnet.bicep' = {
-//   scope: rg
-//   name: 'createVnet'
-//   params: {
-//     tags: tags
-//   }
-// }
+resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' existing = {
+  name: vnetName
+  scope: resourceGroup(vnetResourceGroupName)
+}
 
 module createArcHostVM './../../mod/dev-vm.bicep' = {
   scope: rg
@@ -33,7 +31,7 @@ module createArcHostVM './../../mod/dev-vm.bicep' = {
   params: {
     adminPassword: adminPassword
     adminUsername: adminUsername
-    vmSubnetId: '${vnetId}/subnets/${subnetName}'
+    vmSubnetId: '${vnet.id}/subnets/${subnetName}'
     tags: tags
     vmSize: 'Standard_D8s_v4'
     
