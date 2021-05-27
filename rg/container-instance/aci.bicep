@@ -1,12 +1,19 @@
 //names
 param disambiguationPhrase string = ''
 param aciName string = 'aci${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
-param subnetId string
+param vnetName string
+param vnetResourceGroupName string
+param subnetName string
 
 param location string = resourceGroup().location
 
 //required
 param tags object
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
+  name: '${vnetName}/subnets/${subnetName}'
+  scope: resourceGroup(vnetResourceGroupName)
+}
 
 resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
   name: 'aciNetworkProfile'
@@ -20,9 +27,7 @@ resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' 
             {
               name: 'ipconfig'
               properties: {
-                subnet: {
-                  id: subnetId
-                }
+                subnet: subnet
               }
             }
           ]
