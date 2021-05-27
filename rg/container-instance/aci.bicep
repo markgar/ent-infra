@@ -10,7 +10,7 @@ param location string = resourceGroup().location
 //required
 param tags object
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
+resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
   name: '${vnetName}/subnets/${subnetName}'
   scope: resourceGroup(vnetResourceGroupName)
 }
@@ -27,7 +27,7 @@ resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' 
             {
               name: 'ipconfig'
               properties: {
-                subnet: subnet
+                subnet: subnetRef
               }
             }
           ]
@@ -62,8 +62,6 @@ resource storage 'Microsoft.ContainerInstance/containerGroups@2021-03-01' = {
       }
     ]
     osType: 'Linux'
-    networkProfile: {
-      id: aciSubnetNetworkProfile.id
-    }
+    networkProfile: aciSubnetNetworkProfile
   }
 }
