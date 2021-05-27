@@ -16,7 +16,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 }
 
 
-module createStorage 'aci.bicep' = {
+module createContainerInstance 'aci.bicep' = {
   scope: rg
   name: 'createAci-${now}'
   params: {

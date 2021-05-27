@@ -27,13 +27,18 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 //   }
 // }
 
+resource vnetRef 'Microsoft.Network/virtualNetworks@2020-11-01' existing = {
+  name: 'vnet-4p7rjz3pg5tyy'
+  scope: resourceGroup('m-shared-vnet')
+}
+
 module createArcHostVM './../../mod/dev-vm.bicep' = {
   scope: rg
   name: 'createVM-${now}'
   params: {
     adminPassword: adminPassword
     adminUsername: adminUsername
-    vmSubnetId: '${vnetId}/subnets/${subnetName}'
+    vmSubnetId: '${vnetRef.id}/subnets/${subnetName}'
     tags: tags
     vmSize: 'Standard_D8s_v4'
   }
