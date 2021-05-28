@@ -11,7 +11,7 @@ param location string = resourceGroup().location
 param tags object
 
 resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
-  name: '${vnetName}/subnets/${subnetName}'
+  name: '${vnetName}/${subnetName}'
   scope: resourceGroup(vnetResourceGroupName)
 }
 
