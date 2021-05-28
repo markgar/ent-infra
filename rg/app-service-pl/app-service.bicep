@@ -11,12 +11,15 @@ param tags object
 resource serverFarm 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: serverFarmName
   location: location
+  sku: {
+    name: 'S1'
+  }
 }
 
-resource webSite 'Microsoft.Web/sites@2020-12-01' = {
-  name: webSiteName
-  location: location
-  properties: {
-    serverFarmId: serverFarm.id
-  }
+// resource webSite 'Microsoft.Web/sites@2020-12-01' = {
+//   name: webSiteName
+//   location: location
+//   properties: {
+//     serverFarmId: serverFarm.id
+//   }
 }
