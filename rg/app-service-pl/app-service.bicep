@@ -22,4 +22,4 @@ resource serverFarm 'Microsoft.Web/serverfarms@2020-12-01' = {
 //   properties: {
 //     serverFarmId: serverFarm.id
 //   }
-}
+//}
