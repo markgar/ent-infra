@@ -1,0 +1,86 @@
+name: simple-storage-ci
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - 'rg/simple-storage/**'
+    - '.github/workflows/simple-storage-multistage.yml'
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  build-phase:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: fetch code
+        uses: actions/checkout@v2
+
+      - name: prep parameters
+        shell: pwsh
+        run: |
+          $params = @{ rgName = 'simple-storage' }
+          $params | ConvertTo-Json | Out-File -Filepath './rg/simple-storage/params.json'
+
+      - name: create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: bicep
+          path: 'rg/simple-storage/**'
+
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    needs: build-phase
+    environment: dev
+
+    steps:
+      - name: login to azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: retrieve artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: bicep
+
+      - name: run deploy script
+        shell: pwsh
+        run: |
+          $params = Get-Content -Raw -Path params.json | ConvertFrom-Json
+          $rgName = $params.rgName
+          $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
+
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env='${{ secrets.ENV }}' rgName=$rgName
+
+
+  deploy-to-test:
+    runs-on: ubuntu-latest
+    needs: deploy-to-dev
+    environment: test
+
+    steps:
+      - name: login to azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: retrieve artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: bicep
+
+      - name: run deploy script
+        shell: pwsh
+        run: |
+          $params = Get-Content -Raw -Path params.json | ConvertFrom-Json
+          $rgName = $params.rgName
+          $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
+
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters env='${{ secrets.ENV }}' rgName=$rgName
