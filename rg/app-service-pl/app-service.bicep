@@ -16,7 +16,7 @@ resource serverFarm 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: serverFarmName
   location: location
   sku: {
-    name: 'Pv2'
+    name: 'P1v2'
   }
 }
 
