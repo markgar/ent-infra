@@ -18,5 +18,8 @@ module createAppServiceSite 'app-service.bicep' = {
   name: 'createAppServiceSite'
   params: {
     tags: tags
+    vnetResourceGroupName: 'm-shared-vnet'
+    vnetName: 'vnet-4p7rjz3pg5tyy'
+    vnetSubnetName: 'privatelink'
   }
 }

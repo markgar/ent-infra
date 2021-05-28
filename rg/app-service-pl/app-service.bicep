@@ -67,5 +67,5 @@ resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existi
 //       }
 //     ]
 //   }
-  //tags: tags
+// tags: tags
 // }
