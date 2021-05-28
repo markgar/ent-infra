@@ -3,8 +3,8 @@ param disambiguationPhrase string = ''
 param serverFarmName string = 'farm-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 param webSiteName string = 'web-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
 param privateEndpointName string = 'pe-${disambiguationPhrase}${uniqueString(subscription().id, resourceGroup().id)}'
-param vnetName string
 param vnetResourceGroupName string
+param vnetName string
 param vnetSubnetName string
 
 param location string = resourceGroup().location
@@ -30,6 +30,11 @@ resource webSite 'Microsoft.Web/sites@2020-12-01' = {
 
 resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
   name: '${vnetName}/${vnetSubnetName}'
+  scope: resourceGroup(vnetResourceGroupName)
+}
+
+resource zoneRef 'Microsoft.Network/dnsZones@2018-05-01' existing = {
+  name: 'privatelink.database.windows.net'
   scope: resourceGroup(vnetResourceGroupName)
 }
 
@@ -62,7 +67,7 @@ resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020
       {
         name: 'config1'
         properties: {
-          privateDnsZoneId: '${dnsZone.id}'
+          privateDnsZoneId: zoneRef.id
         }
       }
     ]
