@@ -1,8 +1,6 @@
 targetScope = 'subscription'
 
 param rgName string
-param env string
-
 
 var tags = {
   'env': 'dev'
@@ -11,7 +9,7 @@ var tags = {
 param now string = utcNow()
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: 'm-${rgName}-${env}'
+  name: 'm-${rgName}'
   location: 'eastus'
 }
 
