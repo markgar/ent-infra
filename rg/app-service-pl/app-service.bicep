@@ -72,5 +72,4 @@ resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020
       }
     ]
   }
-  tags: tags
 }
