@@ -9,7 +9,7 @@ var tags = {
 param now string = utcNow()
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: 'm-${rgName}'
+  name: rgName'
   location: 'eastus'
 }
 
