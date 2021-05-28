@@ -1,11 +1,11 @@
-name: simple-storage-ci
+name: container-instance-ci
 
 on:
   push:
     branches: [ main ]
     paths:
-    - 'rg/simple-storage/**'
-    - '.github/workflows/simple-storage.yml'
+    - 'rg/container-instnce/**'
+    - '.github/workflows/continer-instance.yml'
   pull_request:
     branches: [ main ]
 
@@ -25,14 +25,14 @@ jobs:
       - name: prep parameters
         shell: pwsh
         run: |
-          $params = @{ rgName = 'simple-storage' }
-          $params | ConvertTo-Json | Out-File -Filepath './rg/simple-storage/params.json'
+          $params = @{ rgName = 'container-instance' }
+          $params | ConvertTo-Json | Out-File -Filepath './rg/container-instance/params.json'
 
       - name: create artifact
         uses: actions/upload-artifact@v2
         with:
           name: bicep
-          path: 'rg/simple-storage/**'
+          path: 'rg/container-instance/**'
 
   deploy-to-dev:
     runs-on: ubuntu-latest
