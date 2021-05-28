@@ -67,15 +67,5 @@ resource storage 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
     networkProfile: {
       id: aciSubnetNetworkProfile.id
     }
-  
-    // ipAddress: {
-    //   type: 'Public'
-    //   ports: [
-    //     {
-    //       port: 80
-    //       protocol: 'TCP'
-    //     }
-    //   ]
-    // }
   }
 }
