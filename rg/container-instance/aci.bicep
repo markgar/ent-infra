@@ -15,7 +15,7 @@ resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existi
   scope: resourceGroup(vnetResourceGroupName)
 }
 
-resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
+resource aciSubnetNetworkProfile 'Microsoft.Network/networkProfiles@2020-08-01' = {
   name: 'aciNetworkProfile'
   location: location
   properties: {
