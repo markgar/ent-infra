@@ -21,6 +21,17 @@ module createVnet './vnet.bicep' = {
   }
 }
 
+module createPrivateZones 'private-zones.bicep' = {
+  scope: rg
+  name: 'createPrivateZones=${now}'
+  params: {
+    tags: tags
+    vnetName: 'vnet-4p7rjz3pg5tyy'
+    vnetResourceGroupName: 'm-shared-vnet'
+  }
+  
+}
+
 module createBastion './../../mod/bastion.bicep' = {
   scope: rg
   name: 'createBastion-${now}'
