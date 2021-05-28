@@ -22,7 +22,7 @@ jobs:
       - name: fetch code
         uses: actions/checkout@v2
 
-      - name: run deploy script
+      - name: prep parameters
         shell: pwsh
         run: |
           $params = @{ rgName = 'simple-storage' }
