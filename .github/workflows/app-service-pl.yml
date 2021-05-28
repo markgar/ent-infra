@@ -1,0 +1,32 @@
+name: app-service-pl-ci
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - 'rg/app-service-pl/**'
+    - '.github/workflows/app-service-pl.yml'
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  perform-cicd:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Run deploy script
+        shell: pwsh
+        run: |
+          Set-Location -Path ./rg/app-service-pl
+          ./deploy.ps1
