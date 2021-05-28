@@ -14,7 +14,7 @@ on:
 
 jobs:
 
-  build:
+  perform-cicd:
     runs-on: ubuntu-latest
 
     steps:
