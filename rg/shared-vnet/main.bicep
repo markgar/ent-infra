@@ -23,7 +23,7 @@ module createVnet './vnet.bicep' = {
 
 module createPrivateZones 'private-zones.bicep' = {
   scope: rg
-  name: 'createPrivateZones=${now}'
+  name: 'createPrivateZones-${now}'
   params: {
     tags: tags
     vnetName: 'vnet-4p7rjz3pg5tyy'
