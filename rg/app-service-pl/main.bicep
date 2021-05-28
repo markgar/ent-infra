@@ -19,5 +19,4 @@ module createAppServiceSite 'app-service.bicep' = {
   params: {
     tags: tags
   }
-  
 }

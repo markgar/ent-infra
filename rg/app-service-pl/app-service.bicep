@@ -16,10 +16,10 @@ resource serverFarm 'Microsoft.Web/serverfarms@2020-12-01' = {
   }
 }
 
-// resource webSite 'Microsoft.Web/sites@2020-12-01' = {
-//   name: webSiteName
-//   location: location
-//   properties: {
-//     serverFarmId: serverFarm.id
-//   }
-//}
+resource webSite 'Microsoft.Web/sites@2020-12-01' = {
+  name: webSiteName
+  location: location
+  properties: {
+    serverFarmId: serverFarm.id
+  }
+}
