@@ -30,42 +30,42 @@ resource webSite 'Microsoft.Web/sites@2020-12-01' = {
 
 resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
   name: '${vnetName}/${vnetSubnetName}'
-  scope: resourceGroup(vnetResourceGroupName) 
+  scope: resourceGroup(vnetResourceGroupName)
 }
 
-// resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
-//   name: privateEndpointName
-//   location: location
-//   properties: {
-//     subnet: {
-//       id: subnetRef.id
-//     }
-//     privateLinkServiceConnections: [
-//       {
-//         name: privateEndpointName
-//         properties: {
-//           privateLinkServiceId: webSite.id
-//           groupIds: [
-//            ''
-//           ]
-//         }
-//       }
-//     ]
-//   }
-//   tags: tags
-// }
+resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
+  name: privateEndpointName
+  location: location
+  properties: {
+    subnet: {
+      id: subnetRef.id
+    }
+    privateLinkServiceConnections: [
+      {
+        name: privateEndpointName
+        properties: {
+          privateLinkServiceId: webSite.id
+          groupIds: [
+            ''
+          ]
+        }
+      }
+    ]
+  }
+  tags: tags
+}
 
-// resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
-//   name: '${privateEndpointName}/default'
-//   properties: {
-//     privateDnsZoneConfigs: [
-//       {
-//         name: 'config1'
-//         properties: {
-//           privateDnsZoneId: '${dnsZone.id}'
-//         }
-//       }
-//     ]
-//   }
-// tags: tags
-// }
+resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
+  name: '${privateEndpointName}/default'
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'config1'
+        properties: {
+          privateDnsZoneId: '${dnsZone.id}'
+        }
+      }
+    ]
+  }
+  tags: tags
+}
