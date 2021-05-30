@@ -76,5 +76,3 @@ resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
 //     ]
 //   }
 // }
-
-output zoneId string = zoneRef.id
