@@ -15,7 +15,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 
 module createAppServiceSite 'app-service.bicep' = {
   scope: rg
-  name: 'createAppServiceSite'
+  name: 'createAppServiceSite-${now}'
   params: {
     tags: tags
     vnetResourceGroupName: 'm-shared-vnet'

@@ -62,6 +62,9 @@ resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
 
 resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
   name: '${privateEndpointName}/default'
+  dependsOn: [
+    webPrivateEndpoint
+  ]
   properties: {
     privateDnsZoneConfigs: [
       {
@@ -73,3 +76,5 @@ resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020
     ]
   }
 }
+
+output zoneId string = zoneRef.id
