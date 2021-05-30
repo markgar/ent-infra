@@ -61,11 +61,11 @@ resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
 }
 
 resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
-  name: '${privateEndpointName}/something'
+  name: '${privateEndpointName}/default'
   properties: {
     privateDnsZoneConfigs: [
       {
-        name: 'config1'
+        name: 'privatelink-azurewebsites-net'
         properties: {
           privateDnsZoneId: zoneRef.id
         }
