@@ -60,19 +60,19 @@ resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
   tags: tags
 }
 
-// resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
-//   name: '${privateEndpointName}/default'
-//   dependsOn: [
-//     webPrivateEndpoint
-//   ]
-//   properties: {
-//     privateDnsZoneConfigs: [
-//       {
-//         name: 'privatelink-azurewebsites-net'
-//         properties: {
-//           privateDnsZoneId: zoneRef.id
-//         }
-//       }
-//     ]
-//   }
-// }
+resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
+  name: '${privateEndpointName}/default'
+  dependsOn: [
+    webPrivateEndpoint
+  ]
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'privatelink-azurewebsites-net'
+        properties: {
+          privateDnsZoneId: zoneRef.id
+        }
+      }
+    ]
+  }
+}

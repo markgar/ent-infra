@@ -49,25 +49,4 @@ resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020
   //tags: tags
 }
 
-resource dnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: dnsZoneName
-  location: 'global'
-  tags: tags
-}
 
-
-
-resource link 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: '${dnsZoneName}/${dnsZoneName}-link'
-  location: 'global'
-  properties: {
-    registrationEnabled: true
-    virtualNetwork: {
-      id: vnetId
-    }
-  }
-  tags: tags
-  // dependsOn: [
-  //   dnsZone
-  // ]
-}
