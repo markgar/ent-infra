@@ -33,7 +33,7 @@ resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existi
   scope: resourceGroup(vnetResourceGroupName)
 }
 
-resource zoneRef 'Microsoft.Network/dnsZones@2018-05-01' existing = {
+resource zoneRef 'Microsoft.Network/privateDnsZones@2020-06-01' existing = {
   name: 'privatelink.database.windows.net'
   scope: resourceGroup(vnetResourceGroupName)
 }
