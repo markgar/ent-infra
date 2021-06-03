@@ -13,4 +13,11 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: 'eastus'
 }
 
-
+module createAppService 'app-service.bicep' = {
+  scope: rg
+  name: 'createAppService=${now}'
+  params: {
+    tags: tags
+  }
+  
+}
