@@ -15,9 +15,16 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 
 module createAppService 'app-service.bicep' = {
   scope: rg
-  name: 'createAppService=${now}'
+  name: 'createAppService-${now}'
   params: {
     tags: tags
   }
-  
+}
+
+module createCosmos 'cosmosDb.bicep' = {
+  scope: rg
+  name: 'createCosmos-${now}'
+  params: {
+    tags: tags
+  }
 }
