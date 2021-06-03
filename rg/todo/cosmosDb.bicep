@@ -18,4 +18,5 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
     ]
   }
   tags: tags
+  location: location
 }
