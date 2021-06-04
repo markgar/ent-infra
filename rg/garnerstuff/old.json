@@ -1,0 +1,156 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/dnszones",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com",
+            "location": "global",
+            "properties": {
+                "zoneType": "Public"
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/A",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/@",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 60,
+                "ARecords": [],
+                "targetResource": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/CNAME",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/creative",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "CNAMERecord": {
+                    "cname": "creativeserver.centralus.cloudapp.azure.com"
+                },
+                "targetResource": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/CNAME",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/mc",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "CNAMERecord": {
+                    "cname": "bungeeserver.centralus.cloudapp.azure.com"
+                },
+                "targetResource": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/CNAME",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/pe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "CNAMERecord": {
+                    "cname": "minecraftsurv2-mg.centralus.cloudapp.azure.com"
+                },
+                "targetResource": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/CNAME",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/survival",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "CNAMERecord": {
+                    "cname": "minecraftsurv2-mg.centralus.cloudapp.azure.com"
+                },
+                "targetResource": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/NS",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/@",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 172800,
+                "NSRecords": [
+                    {
+                        "nsdname": "ns1-08.azure-dns.com."
+                    },
+                    {
+                        "nsdname": "ns2-08.azure-dns.net."
+                    },
+                    {
+                        "nsdname": "ns3-08.azure-dns.org."
+                    },
+                    {
+                        "nsdname": "ns4-08.azure-dns.info."
+                    }
+                ],
+                "targetResource": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/SOA",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/@",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "SOARecord": {
+                    "email": "azuredns-hostmaster.microsoft.com",
+                    "expireTime": 2419200,
+                    "host": "ns1-08.azure-dns.com.",
+                    "minimumTTL": 300,
+                    "refreshTime": 3600,
+                    "retryTime": 300,
+                    "serialNumber": 1
+                },
+                "targetResource": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/TXT",
+            "apiVersion": "2018-05-01",
+            "name": "garnerstuff.com/_acme-challenge",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', 'garnerstuff.com')]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "TXTRecords": [
+                    {
+                        "value": [
+                            "N8PR7l6NA4lgpTlK73rz9W3XpNOu1KMnlwfPW_5Ksc0"
+                        ]
+                    }
+                ],
+                "targetResource": {}
+            }
+        }
+    ]
+}
