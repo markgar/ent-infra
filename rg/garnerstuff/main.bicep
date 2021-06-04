@@ -13,4 +13,10 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: 'eastus'
 }
 
-
+module createDNSZone 'garnerStuffDNS.bicep' = {
+  scope: rg
+  name: 'createDNSZone-${now}'
+  params: {
+    tags: tags
+  }
+}
