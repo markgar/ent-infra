@@ -10,7 +10,7 @@ param now string = utcNow()
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: rgName
-  location: 'eastus'
+  location: 'westus'
 }
 
 module createStorage 'storage.bicep' = {
