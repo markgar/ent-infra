@@ -19,9 +19,11 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 }
 
 resource fileshareService 'Microsoft.Storage/storageAccounts/fileServices@2021-02-01' = {
-  name: '${storageAccountName}/default'
+  parent: storage
+  name: 'default'
 }
 
 resource fileshare 'Microsoft.Storage/storageAccounts/fileServices/shares@2021-02-01' = {
-  name: '${storageAccountName}/default/mgclouddrive'
+  parent: fileshareService
+  name: 'mgclouddrive'
 }
