@@ -13,4 +13,10 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: 'eastus'
 }
 
-
+module createStorage 'storage.bicep' = {
+  scope: rg
+  name: 'createStorage-${now}'
+  params: {
+    tags: tags
+  }
+}
