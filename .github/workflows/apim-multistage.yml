@@ -1,11 +1,11 @@
-name: simple-storage-ci
+name: api-management-ci
 
 on:
   push:
     branches: [ main ]
     paths:
-    - 'rg/simple-storage/**'
-    - '.github/workflows/simple-storage-multistage.yml'
+    - 'rg/api-management/**'
+    - '.github/workflows/api-management-multistage.yml'
   pull_request:
     branches: [ main ]
 
@@ -25,14 +25,14 @@ jobs:
       - name: prep parameters
         shell: pwsh
         run: |
-          $params = @{ rgName = 'simple-storage' }
-          $params | ConvertTo-Json | Out-File -Filepath './rg/simple-storage/params.json'
+          $params = @{ rgName = 'api-management' }
+          $params | ConvertTo-Json | Out-File -Filepath './rg/api-management/params.json'
 
       - name: create artifact
         uses: actions/upload-artifact@v2
         with:
           name: bicep
-          path: 'rg/simple-storage/**'
+          path: 'rg/api-management/**'
 
   deploy-to-dev:
     runs-on: ubuntu-latest
