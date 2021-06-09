@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
     - 'rg/api-management/**'
-    - '.github/workflows/api-management-multistage.yml'
+    - '.github/workflows/apim-multistage.yml'
   pull_request:
     branches: [ main ]
 
