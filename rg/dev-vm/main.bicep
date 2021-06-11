@@ -18,22 +18,14 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: 'eastus'
 }
 
-// module createVnet './../../mod/vnet.bicep' = {
-//   scope: rg
-//   name: 'createVnet-${now}'
-//   params: {
-//     tags: tags
-//   }
-// }
-
-// resource vnetRef 'Microsoft.Network/virtualNetworks@2020-11-01' existing = {
-//   name: 'vnet-4p7rjz3pg5tyy'
-//   scope: resourceGroup('m-shared-vnet')
-// }
+resource vnetRef 'Microsoft.Network/virtualNetworks@2020-11-01' existing = {
+  name: 'vnet-4p7rjz3pg5tyy'
+  scope: resourceGroup('m-shared-vnet')
+}
 
 resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
-  name: 'vnet-4p7rjz3pg5tyy/${subnetName}'
-  scope: resourceGroup('m-shared-vnet')
+  parent: vnetRef
+  name: subnetName
 }
 
 module createArcHostVM './../../mod/dev-vm.bicep' = {
@@ -47,12 +39,3 @@ module createArcHostVM './../../mod/dev-vm.bicep' = {
     vmSize: 'Standard_D8s_v4'
   }
 }
-
-// module createBastion './../../mod/bastion.bicep' = {
-//   scope: rg
-//   name: 'createBastion-${now}'
-//   params: {
-//     subnetId: createVnet.outputs.bastionSubnetId
-//     namingGuid: bastionNamingGuid
-//   }
-// }
