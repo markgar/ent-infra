@@ -18,7 +18,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: 'eastus'
 }
 
-module deployAks './../../mod/aks.bicep' = {
+module deployAks './aks.bicep' = {
   name: 'createAks-${now}'
   scope: rg
   params: {

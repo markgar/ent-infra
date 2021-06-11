@@ -32,7 +32,7 @@ module createPrivateZones 'private-zones.bicep' = {
   
 }
 
-module createBastion './../../mod/bastion.bicep' = {
+module createBastion './bastion.bicep' = {
   scope: rg
   name: 'createBastion-${now}'
   params: {
