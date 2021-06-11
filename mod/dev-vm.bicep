@@ -64,9 +64,9 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
         name: 'ipconfig1'
         properties: {
           privateIPAllocationMethod: 'Dynamic'
-          // publicIPAddress: {
-          //   id: pip.id
-          // }
+          // // publicIPAddress: {
+          // //   id: pip.id
+          // // }
           subnet: {
             id: vmSubnetId
           }
