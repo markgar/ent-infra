@@ -10,7 +10,6 @@ param location string = resourceGroup().location
 
 //required
 param vmSubnetId string
-param createPublicIP bool = true
 param tags object
 param adminUsername string
 @secure()
