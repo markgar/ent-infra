@@ -135,4 +135,4 @@ resource offSched 'Microsoft.DevTestLab/schedules@2018-09-15' = {
   tags: tags
 }
 
-//output hostname string = pip.properties.dnsSettings.fqdn
+output hostname string = createAsPublic ? pip.properties.dnsSettings.fqdn : ''
