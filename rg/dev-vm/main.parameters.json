@@ -5,7 +5,7 @@
         "adminUsername": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/75ebdae9-6e1c-4baa-8b2e-5576f6356a91/resourceGroups/m-shared-keyvault/providers/Microsoft.KeyVault/vaults/keyVaultuiivowbk"
+                    "id": "/subscriptions/75ebdae9-6e1c-4baa-8b2e-5576f6356a91/resourceGroups/m-shared-keyvault/providers/Microsoft.KeyVault/vaults/kvzf73hrxv7rg5c"
                 },
                 "secretName": "vmAdminUsername"
             }
@@ -13,7 +13,7 @@
         "adminPassword": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/75ebdae9-6e1c-4baa-8b2e-5576f6356a91/resourceGroups/m-shared-keyvault/providers/Microsoft.KeyVault/vaults/keyVaultuiivowbk"
+                    "id": "/subscriptions/75ebdae9-6e1c-4baa-8b2e-5576f6356a91/resourceGroups/m-shared-keyvault/providers/Microsoft.KeyVault/vaults/kvzf73hrxv7rg5c"
                 },
                 "secretName": "vmAdminPassword"
             }
