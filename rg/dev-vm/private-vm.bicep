@@ -66,7 +66,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: createAsPublic ? {
             id: pip.id
-          }
+          } : null
           subnet: {
             id: vmSubnetId
           }
