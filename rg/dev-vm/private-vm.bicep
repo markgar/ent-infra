@@ -41,7 +41,7 @@ resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   tags: tags
 }
 
-resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = if (createPublicIP) {
+resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
   name: publicIPAddressName
   location: location
   properties: {
