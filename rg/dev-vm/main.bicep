@@ -34,6 +34,7 @@ module createDevVM './../../mod/dev-vm.bicep' = {
   params: {
     adminPassword: adminPassword
     adminUsername: adminUsername
+    createPublicIP: false
     vmSubnetId: subnetRef.id
     tags: tags
     vmSize: 'Standard_D8s_v4'

@@ -10,6 +10,7 @@ param location string = resourceGroup().location
 
 //required
 param vmSubnetId string
+param createPublicIP bool = true
 param tags object
 param adminUsername string
 @secure()
@@ -41,7 +42,7 @@ resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   tags: tags
 }
 
-resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
+resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = if (createPublicIP) {
   name: publicIPAddressName
   location: location
   properties: {
@@ -67,7 +68,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
             id: pip.id
           }
           subnet: {
-            id: '${vmSubnetId}'
+            id: vmSubnetId
           }
         }
       }
