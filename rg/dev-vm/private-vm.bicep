@@ -11,6 +11,7 @@ param location string = resourceGroup().location
 //required
 param vmSubnetId string
 param tags object
+param createAsPublic bool = true
 param adminUsername string
 @secure()
 param adminPassword string
@@ -41,7 +42,7 @@ resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   tags: tags
 }
 
-resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
+resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' =  if (createAsPublic) {
   name: publicIPAddressName
   location: location
   properties: {
@@ -63,9 +64,9 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
         name: 'ipconfig1'
         properties: {
           privateIPAllocationMethod: 'Dynamic'
-          // publicIPAddress: {
-          //   id: pip.id
-          // }
+          publicIPAddress: createAsPublic ? {
+            id: pip.id
+          }
           subnet: {
             id: vmSubnetId
           }

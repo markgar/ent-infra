@@ -34,6 +34,7 @@ module createDevVM './private-vm.bicep' = {
   params: {
     adminPassword: adminPassword
     adminUsername: adminUsername
+    createAsPublic: false
     vmSubnetId: subnetRef.id
     tags: tags
     vmSize: 'Standard_D8s_v4'
