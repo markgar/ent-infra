@@ -1,0 +1,38 @@
+name: dev-vm-ci
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - 'rg/action-runner-vm/**'
+    - '.github/workflows/dev-vm.yml'
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  perform-cicd:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Run deploy script
+        shell: pwsh
+        run: |
+          Set-Location -Path ./rg/action-runner-vm
+          $rgname = (Get-Location).Path.Split("/")[(Get-Location).Path.Split("/").Count-1]
+          $rgname = "m-" + $rgname
+
+          $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
+
+          az deployment sub create --location eastus --template-file ./main.bicep --name $deploymentName --parameters ./main.parameters.json --parameters rgName=$rgname
+
