@@ -28,7 +28,7 @@ resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existi
   name: subnetName
 }
 
-module createDevVM './action-runner-vm.bicep' = {
+module createDevVM './actions-runner-vm.bicep' = {
   scope: rg
   name: 'createVM-${now}'
   params: {

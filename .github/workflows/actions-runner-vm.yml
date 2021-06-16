@@ -4,8 +4,8 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'rg/action-runner-vm/**'
-    - '.github/workflows/dev-vm.yml'
+    - 'rg/actions-runner-vm/**'
+    - '.github/workflows/actions-runner-vm.yml'
   pull_request:
     branches: [ main ]
 
@@ -28,7 +28,7 @@ jobs:
       - name: Run deploy script
         shell: pwsh
         run: |
-          Set-Location -Path ./rg/action-runner-vm
+          Set-Location -Path ./rg/actions-runner-vm
           $rgname = (Get-Location).Path.Split("/")[(Get-Location).Path.Split("/").Count-1]
           $rgname = "m-" + $rgname
 
