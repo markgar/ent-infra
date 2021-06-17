@@ -1,11 +1,11 @@
-name: todo-ci
+name: generic-ci
 
 on:
   push:
     branches: [ main ]
     paths:
     - 'rg/**'
-    - '.github/workflows/todo.yml'
+    - '.github/workflows/generic.yml'
   pull_request:
     branches: [ main ]
 
