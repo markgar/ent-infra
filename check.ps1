@@ -1,5 +1,7 @@
+Write-Host 'Old way:'
 git diff HEAD HEAD~ --name-only
 
+Write-Host 'New Way'
 git log -1 --name-only --oneline
 
 $editedFiles = @( git diff HEAD HEAD~ --name-only )
