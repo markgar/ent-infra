@@ -29,4 +29,4 @@ module createCosmos 'cosmosDb.bicep' = {
   }
 }
 
-// test//
+// test
