@@ -1,7 +1,10 @@
+git diff HEAD HEAD~ --name-only
+
+git log -1 --name-only --oneline
 
 $editedFiles = @( git diff HEAD HEAD~ --name-only )
- Write-Host 'Edited files:'
- Write-Host $editedFiles
+Write-Host 'Edited files:'
+Write-Host $editedFiles
 
 $editedFilesFiltered = $editedFiles -match "rg/*"
 
