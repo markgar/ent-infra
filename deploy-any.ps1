@@ -24,7 +24,7 @@ foreach ($directory in $directoriesWithChanges) {
         $rgname = "m-" + $directory
 
         $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
-        $templateFilePath = './rg/' + $directory + '/main.bicep'
+        $templateFilePath = './rg-generic/' + $directory + '/main.bicep'
         az deployment sub create --location eastus --template-file $templateFilePath --name $deploymentName --parameters rgName=$rgname
     }
 }
