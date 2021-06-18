@@ -20,6 +20,6 @@ foreach ($directory in $directoriesWithChanges) {
     Write-Host 'Command to execute:'
     Write-Host $commandToExecute
 
-    Invoke-Command -FilePath $commandToExecute
+    Invoke-Command -FilePath './rg/todo/deploy.ps1'
 }
 
