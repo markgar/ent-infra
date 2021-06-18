@@ -4,8 +4,8 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'check.ps1'
-    - 'rg/**'
+    - 'deploy-any.ps1'
+    - 'rg-generic/**'
     - '.github/workflows/generic.yml'
   pull_request:
     branches: [ main ]
