@@ -20,7 +20,7 @@ foreach ($directory in $directoriesWithChanges) {
 
         $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
         $templateFilePath = './rg-generic/' + $directory + '/main.bicep'
-        $dirToCheck = './rg-generic/' + $directory
+        $dirToCheck = './rg-generic/' + $directory + '/*parameters.json'
 
         Write-Host $dirToCheck
         Get-ChildItem $dirToCheck -Name
