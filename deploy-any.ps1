@@ -22,7 +22,10 @@ foreach ($directory in $directoriesWithChanges) {
         $templateFilePath = './rg-generic/' + $directory + '/main.bicep'
         $dirToCheck = './rg-generic/' + $directory
 
+        Write-Host $dirToCheck
+        Get-ChildItem $dirToCheck -Name
         $parametersFileList = Get-ChildItem $dirToCheck -Name
+        
         if ($parametersFileList.Length -gt 0)
         {
             Write-Host "Try with Parameters"
