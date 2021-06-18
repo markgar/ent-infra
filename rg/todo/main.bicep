@@ -28,5 +28,3 @@ module createCosmos 'cosmosDb.bicep' = {
     tags: tags
   }
 }
-
-// test //
