@@ -25,7 +25,17 @@ foreach ($directory in $directoriesWithChanges) {
 
         $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
         $templateFilePath = './rg-generic/' + $directory + '/main.bicep'
-        az deployment sub create --location eastus --template-file $templateFilePath --name $deploymentName --parameters rgName=$rgname
+        $dirToCheck = './rg-generic/' + $directory
+
+        $parametersFileList = Get-ChildItem $dirToCheck -Name
+        if ($parametersFileList.Length -gt 0)
+        {
+            az deployment sub create --location eastus --template-file $templateFilePath --name $deploymentName --parameters ./main.parameters.json --parameters rgName=$rgname
+        }
+        else {
+            az deployment sub create --location eastus --template-file $templateFilePath --name $deploymentName --parameters rgName=$rgname
+        }
+        
     }
 }
 

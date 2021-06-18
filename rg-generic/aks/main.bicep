@@ -28,3 +28,5 @@ module deployAks './aks.bicep' = {
     aksSPSecret: aksSPSecret
   }
 }
+
+//test
