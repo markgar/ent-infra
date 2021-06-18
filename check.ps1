@@ -22,6 +22,7 @@ foreach ($directory in $directoriesWithChanges) {
     $dirToCheck = './rg/' + $directory
     # Get-ChildItem -Path $dirToCheck
     $commandToExecute = $dirToCheck + '/deploy.ps1'
+    Write-Host $commandToExecute
     Invoke-Command -FilePath $commandToExecute
 }
 

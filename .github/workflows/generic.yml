@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
+    - 'check.ps1'
     - 'rg/**'
     - '.github/workflows/generic.yml'
   pull_request:
