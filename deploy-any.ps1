@@ -15,11 +15,6 @@ Write-Host $directoriesWithChanges
 foreach ($directory in $directoriesWithChanges) {
     $dirToCheck = './rg/' + $directory
 
-    $commandToExecute = $dirToCheck + '/deploy.ps1'
-
-    Write-Host 'Command to execute:'
-    Write-Host $commandToExecute
-
     Invoke-Command -ScriptBlock {
         $rgname = "m-" + $directory
 
@@ -30,7 +25,9 @@ foreach ($directory in $directoriesWithChanges) {
         $parametersFileList = Get-ChildItem $dirToCheck -Name
         if ($parametersFileList.Length -gt 0)
         {
-            az deployment sub create --location eastus --template-file $templateFilePath --name $deploymentName --parameters ./main.parameters.json --parameters rgName=$rgname
+            Write-Host "Try with Parameters"
+            $parameterFilePath = './rg-generic/' + $directory + '/main.parameters.json'
+            az deployment sub create --location eastus --template-file $templateFilePath --name $deploymentName --parameters $parameterFilePath --parameters rgName=$rgname
         }
         else {
             az deployment sub create --location eastus --template-file $templateFilePath --name $deploymentName --parameters rgName=$rgname
