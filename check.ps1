@@ -20,13 +20,15 @@ foreach ($directory in $directoriesWithChanges) {
     Write-Host 'Command to execute:'
     Write-Host $commandToExecute
 
-    Invoke-Command -ScriptBlock {
-        $rgname = (Get-Location).Path.Split("/")[(Get-Location).Path.Split("/").Count-1]
-        $rgname = "m-" + $rgname
+    Invoke-Command -FilePath './rg/todo/deploy.ps1'
 
-        $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
+    # Invoke-Command -ScriptBlock {
+    #     $rgname = (Get-Location).Path.Split("/")[(Get-Location).Path.Split("/").Count-1]
+    #     $rgname = "m-" + $rgname
 
-        az deployment sub create --location eastus --template-file ./rg/todo/main.bicep --name $deploymentName --parameters rgName=$rgname
-    }
+    #     $deploymentName = Get-Date -Format "yyyyMMddHHmmss"
+
+    #     az deployment sub create --location eastus --template-file ./rg/todo/main.bicep --name $deploymentName --parameters rgName=$rgname
+    # }
 }
 
