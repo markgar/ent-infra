@@ -23,7 +23,7 @@ resource vnetRef 'Microsoft.Network/virtualNetworks@2020-11-01' existing = {
   scope: resourceGroup('m-shared-vnet')
 }
 
-resource subnetRef 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' existing = {
+resource subnetRef 'Microsoft.Network/virtualnetworks/subnets@2015-06-15' existing = {
   parent: vnetRef
   name: subnetName
 }

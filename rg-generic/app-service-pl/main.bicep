@@ -22,4 +22,4 @@ module createAppServiceSite 'app-service.bicep' = {
     vnetName: 'vnet-4p7rjz3pg5tyy'
     vnetSubnetName: 'privatelink'
   }
-}
+} 

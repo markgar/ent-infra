@@ -6,6 +6,8 @@ param privateEndpointName string = 'pe-${disambiguationPhrase}${uniqueString(sub
 param vnetResourceGroupName string
 param vnetName string
 param vnetSubnetName string
+param deployWithPrivateLink bool = false
+
 
 param location string = resourceGroup().location
 
@@ -38,7 +40,7 @@ resource zoneRef 'Microsoft.Network/privateDnsZones@2020-06-01' existing = {
   scope: resourceGroup(vnetResourceGroupName)
 }
 
-resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
+resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = if (deployWithPrivateLink) {
   name: privateEndpointName
   location: location
   properties: {
@@ -60,7 +62,7 @@ resource webPrivateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
   tags: tags
 }
 
-resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = {
+resource zoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-06-01' = if (deployWithPrivateLink) {
   name: '${privateEndpointName}/default'
   dependsOn: [
     webPrivateEndpoint
