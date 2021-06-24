@@ -2,7 +2,7 @@ env:
   DAY_OF_WEEK: Mon
 
 
-name: ${{ env.DAY_OF_WEEK }}
+name: "${{ env.DAY_OF_WEEK }}"
 
 on:
   push:
