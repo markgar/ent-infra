@@ -2,7 +2,7 @@ env:
   DAY_OF_WEEK: Mon
 
 
-name: "$DAY_OF_WEEK"
+name: generic-ci
 
 on:
   push:
