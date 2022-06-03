@@ -15,6 +15,19 @@ resource mcCname 'Microsoft.Network/dnsZones/CNAME@2018-05-01' = {
       cname: 'bungeeserver.centralus.cloudapp.azure.com'
     }
   }
-  
 }
 
+
+resource aadDomainTxt 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
+  name: 'garnerstuff.com/@'
+  properties: {
+    TTL: 3600
+    TXTRecords: [
+      {
+        value:  [
+          'MS=ms45259272'
+        ]
+      }
+    ]
+  }
+}
